@@ -1,0 +1,20 @@
+import setuptools
+
+setuptools.setup(
+        install_requires=['requests'],
+        author = 'Caleb Boylan',
+        name = 'zendeskpy',
+        description = 'Python module for interacting with the Zendesk Help Center API',
+        author_email = 'calebboylan@gmail.com',
+        url = 'https://github.com/squidboylan/zendeskpy',
+        version = '0.1.dev1',
+        classifiers = [
+            'Development Status :: 3 - Alpha',
+            'Intended Audience :: Developers',
+            'License :: OSI Approved :: Apache Software License',
+            'Operating System :: POSIX :: Linux',
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.7',
+        ]
+)
