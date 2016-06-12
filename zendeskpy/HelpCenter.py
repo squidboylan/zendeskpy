@@ -65,10 +65,14 @@ class HelpCenter(Base):
     def update_article_metadata(self, article_id, data, locale=None):
         if not locale:
             url = self.domain + '/api/v2/help_center/articles/{id}.json'.format(id=article_id)
-            return self.post(url, data, self.email, self.password)
+            return self.put(url, data, self.email, self.password)
         else:
             url = self.domain + '/api/v2/help_center/{locale}/articles/{id}.json'.format(id=article_id, locale=locale)
-            return self.post(url, data, self.email, self.password)
+            return self.put(url, data, self.email, self.password)
+
+    def update_article(self, article_id, data, locale):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/{locale}.json'.format(article_id=article_id, locale=locale)
+        return self.put(url, data, self.email, self.password)
 
 if __name__ == "__main__":
     domain = sys.argv[1]
