@@ -43,3 +43,15 @@ class Base:
 
         else:
             return response_raw
+
+    def delete(self, url, email=None, password=None):
+        session = requests.Session()
+        session.auth = (email, password)
+        response_raw = session.delete(url)
+
+        if response_raw.status_code == 429:
+            time.sleep(response_raw.headers['Retry-After'])
+            return put(url, data, email, password)
+
+        else:
+            return response_raw

@@ -22,6 +22,8 @@ class HelpCenter(Base):
         data['next_page'] = None
         return data
 
+    # Article functions
+
     def get_all_articles(self):
         url = self.domain + '/api/v2/help_center/articles.json?per_page=100'
         return self._page_gets(url, 'articles')
@@ -70,9 +72,67 @@ class HelpCenter(Base):
             url = self.domain + '/api/v2/help_center/{locale}/articles/{id}.json'.format(id=article_id, locale=locale)
             return self.put(url, data, self.email, self.password)
 
-    def update_article(self, article_id, data, locale):
+    # Translation functions
+
+    def list_translations_by_article(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations.json'.format(article_id=article_id)
+        return self._page_gets(url, 'translations')
+
+    def list_translations_by_section(self, section_id):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations.json'.format(section_id=section_id)
+        return self._page_gets(url, 'translations')
+
+    def list_translations_by_category(self, category_id):
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations.json'.format(category_id=category_id)
+        return self._page_gets(url, 'translations')
+
+    def list_missing_translations_by_article(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/missing.json'.format(article_id=article_id)
+        return self.get(url, self.email, self.password)
+
+    def list_missing_translations_by_section(self, section_id):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations/missing.json'.format(section_id=section_id)
+        return self.get(url, self.email, self.password)
+
+    def list_missing_translations_by_category(self, category_id):
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations/missing.json'.format(category_id=category_id)
+        return self.get(url, self.email, self.password)
+
+    def show_translation(self, article_id, locale):
         url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/{locale}.json'.format(article_id=article_id, locale=locale)
+        return self.get(url, self.email, self.password)
+
+    def create_article_translation(self, article_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations.json'.format(article_id=article_id)
+        return self.post(url, data, self.email, self.password)
+
+    def create_section_translation(self, section_id, data):
+        url = self.domain + '/api/v2/help_center/section/{section_id}/translations.json'.format(section_id=section_id)
+        return self.post(url, data, self.email, self.password)
+
+    def create_category_translation(self, category_id, data):
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations.json'.format(category_id=category_id)
+        return self.post(url, data, self.email, self.password)
+
+    def update_article_translation(self, article_id, data, locale):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/{locale}.json'.format(article_id=article_id)
         return self.put(url, data, self.email, self.password)
+
+    def update_section_translation(self, section_id, data, locale):
+        url = self.domain + '/api/v2/help_center/section/{section_id}/translations/{locale}.json'.format(section_id=section_id)
+        return self.put(url, data, self.email, self.password)
+
+    def update_category_translation(self, category_id, data, locale):
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations/{locale}.json'.format(category_id=category_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_translation(self, translation_id):
+        url = self.domain + '/api/v2/help_center/translations/{id}.json'.format(id=translation_id)
+        return self.delete(url, self.email, self.password)
+
+    def list_enabled_and_default_locales(self):
+        url = self.domain + '/api/v2/help_center/locales.json'
+        return self.get(url, self.email, self.password)
 
 if __name__ == "__main__":
     domain = sys.argv[1]
