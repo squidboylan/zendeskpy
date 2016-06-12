@@ -15,8 +15,11 @@ class Base:
             return get(url, email, password)
 
         else:
-            response_json = json.loads(response_raw.content)
-            return response_json
+            if response_raw.headers['Content-Type'] == "application/json; charset=utf-8":
+                response_json = json.loads(response_raw.content)
+                return response_json
+            else:
+                return None
 
     def put(self, url, data, email=None, password=None):
         session = requests.Session()
@@ -29,7 +32,11 @@ class Base:
             return put(url, data, email, password)
 
         else:
-            return response_raw
+            if response_raw.headers['Content-Type'] == "application/json; charset=utf-8":
+                response_json = json.loads(response_raw.content)
+                return response_json
+            else:
+                return None
 
     def post(self, url, data, email=None, password=None):
         session = requests.Session()
@@ -42,7 +49,11 @@ class Base:
             return put(url, data, email, password)
 
         else:
-            return response_raw
+            if response_raw.headers['Content-Type'] == "application/json; charset=utf-8":
+                response_json = json.loads(response_raw.content)
+                return response_json
+            else:
+                return None
 
     def delete(self, url, email=None, password=None):
         session = requests.Session()
@@ -54,4 +65,8 @@ class Base:
             return put(url, data, email, password)
 
         else:
-            return response_raw
+            if response_raw.headers['Content-Type'] == "application/json; charset=utf-8":
+                response_json = json.loads(response_raw.content)
+                return response_json
+            else:
+                return None
