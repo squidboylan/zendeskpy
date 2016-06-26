@@ -222,6 +222,33 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/categories/{id}.json'.format(id=category_id)
         return self.delete(url, self.email, self.password)
 
+    # Comment Functions
+
+    def list_comments_by_user(self, user_id):
+        url = self.domain + '/api/v2/help_center/users/{id}/comments.json'.format(id=user_id)
+        return self._page_gets(url, 'comments')
+
+    def list_comments_by_article(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{id}/comments.json'.format(id=article_id)
+        return self._page_gets(url, 'comments')
+
+    def show_comment(self, article_id, user_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}.json'.format(article_id=article_id, id=user_id)
+        return self.get(url, self.email, self.password)
+
+    def create_comment(self, article_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{id}/comments.json'.format(id=article_id)
+        return self.post(url, data, self.email, self.password)
+
+    def update_comment(self, article_id, comment_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}.json'.format(article_id=article_id, id=comment_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_comment(self, article_id, comment_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}.json'.format(article_id=article_id, id=comment_id)
+        return self.delete(url, self.email, self.password)
+
+
 if __name__ == "__main__":
     domain = sys.argv[1]
     hc = HelpCenter(domain)
