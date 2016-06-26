@@ -24,27 +24,27 @@ class HelpCenter(Base):
 
     # Article functions
 
-    def get_all_articles(self):
+    def list_all_articles(self):
         url = self.domain + '/api/v2/help_center/articles.json?per_page=100'
         return self._page_gets(url, 'articles')
 
-    def get_articles_by_locale(self, locale):
+    def list_articles_by_locale(self, locale):
         url = self.domain + '/api/v2/help_center/{locale}/articles.json?per_page=100'.format(locale=locale)
         return self._page_gets(url, 'articles')
 
-    def get_articles_by_category(self, category_id):
+    def list_articles_by_category(self, category_id):
         url = self.domain + '/api/v2/help_center/categories/{id}/articles.json?per_page=100'.format(id=category_id)
         return self._page_gets(url, 'articles')
 
-    def get_articles_by_section(self, section_id):
+    def list_articles_by_section(self, section_id):
         url = self.domain + '/api/v2/help_center/sections/{id}/articles.json?per_page=100'.format(id=section_id)
         return self._page_gets(url, 'articles')
 
-    def get_articles_by_user(self, user_id):
+    def list_articles_by_user(self, user_id):
         url = self.domain + '/api/v2/help_center/users/{id}/articles.json?per_page=100'.format(id=user_id)
         return self._page_gets(url, 'articles')
 
-    def get_articles_by_change(self, start_time):
+    def list_articles_by_change(self, start_time):
         url = self.domain + '/api/v2/help_center/incremental/articles.json?start_time={start_time}?per_page=100'.format(start_time=start_time)
         return self._page_gets(url, 'articles')
 
