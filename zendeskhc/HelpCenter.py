@@ -180,6 +180,48 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/sections/{id}.json'.format(id=section_id)
         return self.delete(url, self.email, self.password)
 
+    # Category functions
+
+    def list_all_categories(self):
+        url = self.domain + '/api/v2/help_center/categories.json'
+        return self._page_gets(url, self.email, self.password)
+
+    def list_categories_by_locale(self, locale):
+        url = self.domain + '/api/v2/help_center/{locale}/categories.json'.format(locale=locale)
+        return self._page_gets(url, self.email, self.password)
+
+    def show_category(self, category_id, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/categories/{id}.json'.format(id=category_id)
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/categories/{id}.json'.format(locale=locale, id=category_id)
+
+        return self.get(url, self.email, self.password)
+
+    def create_category(self, data, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/categories.json'
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/categories.json'.format(locale=locale)
+
+        return self.post(url, data, self.email, self.password)
+
+    def update_category(self, category_id, data, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/categories/{id}.json'.format(id=category_id)
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/categories/{id}.json'.format(locale=locale, id=category_id)
+
+        return self.put(url, data, self.email, self.password)
+
+    def update_category_source_locale(self, category_id, data):
+        url = self.domain + '/api/v2/help_center/categories/{id}/source_locale.json'.format(id=category_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_category(self, category_id):
+        url = self.domain + '/api/v2/help_center/categories/{id}.json'.format(id=category_id)
+        return self.delete(url, self.email, self.password)
+
 if __name__ == "__main__":
     domain = sys.argv[1]
     hc = HelpCenter(domain)
