@@ -145,7 +145,7 @@ class HelpCenter(Base):
         return self._page_gets(url, 'sections')
 
     def list_sections_by_category(self, category_id):
-        url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(catergory_id=category_id)
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(category_id=category_id)
         return self._page_gets(url, 'sections')
 
     def show_section(self, section_id, locale=None):
