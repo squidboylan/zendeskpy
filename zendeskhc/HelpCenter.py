@@ -138,15 +138,15 @@ class HelpCenter(Base):
 
     def list_all_sections(self):
         url = self.domain + '/api/v2/help_center/sections.json'
-        return self._page_gets(url, self.email, self.password)
+        return self._page_gets(url, 'sections')
 
     def list_sections_by_locale(self, locale):
         url = self.domain + '/api/v2/help_center/{locale}/sections.json'.format(locale=locale)
-        return self._page_gets(url, self.email, self.password)
+        return self._page_gets(url, 'sections')
 
     def list_sections_by_category(self, category_id):
         url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(catergory_id=category_id)
-        return self._page_gets(url, self.email, self.password)
+        return self._page_gets(url, 'sections')
 
     def show_section(self, section_id, locale=None):
         if not locale:
@@ -184,11 +184,11 @@ class HelpCenter(Base):
 
     def list_all_categories(self):
         url = self.domain + '/api/v2/help_center/categories.json'
-        return self._page_gets(url, self.email, self.password)
+        return self._page_gets(url, 'categories')
 
     def list_categories_by_locale(self, locale):
         url = self.domain + '/api/v2/help_center/{locale}/categories.json'.format(locale=locale)
-        return self._page_gets(url, self.email, self.password)
+        return self._page_gets(url, 'categories')
 
     def show_category(self, category_id, locale=None):
         if not locale:
