@@ -51,26 +51,26 @@ class HelpCenter(Base):
     def show_article(self, article_id, locale=None):
         if not locale:
             url = self.domain + '/api/v2/help_center/articles/{id}.json'.format(id=article_id)
-            return self.get(url, self.email, self.password)
         else:
             url = self.domain + '/api/v2/help_center/{locale}/articles/{id}.json'.format(id=article_id, locale=locale)
-            return self.get(url, self.email, self.password)
+
+        return self.get(url, self.email, self.password)
 
     def create_article(self, section_id, data, locale=None):
         if not locale:
             url = self.domain + '/api/v2/help_center/sections/{id}/articles.json'.format(id=section_id)
-            return self.post(url, data, self.email, self.password)
         else:
             url = self.domain + '/api/v2/help_center/{locale}/sections/{id}/articles.json'.format(id=section_id, locale=locale)
-            return self.post(url, data, self.email, self.password)
+
+        return self.post(url, data, self.email, self.password)
 
     def update_article_metadata(self, article_id, data, locale=None):
         if not locale:
             url = self.domain + '/api/v2/help_center/articles/{id}.json'.format(id=article_id)
-            return self.put(url, data, self.email, self.password)
         else:
             url = self.domain + '/api/v2/help_center/{locale}/articles/{id}.json'.format(id=article_id, locale=locale)
-            return self.put(url, data, self.email, self.password)
+
+        return self.put(url, data, self.email, self.password)
 
     # Translation functions
 
@@ -147,6 +147,38 @@ class HelpCenter(Base):
     def list_sections_by_category(self, category_id):
         url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(catergory_id=category_id)
         return self._page_gets(url, self.email, self.password)
+
+    def show_section(self, section_id, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/sections/{id}.json'.format(id=section_id)
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/sections/{id}.json'.format(locale=locale, id=section_id)
+
+        return self.get(url, self.email, self.password)
+
+    def create_section(self, category_id, data, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/categories/{id}.json'.format(id=section_id)
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/categories/{id}.json'.format(locale=locale, id=section_id)
+
+        return self.post(url, data, self.email, self.password)
+
+    def update_section(self, section_id, data, locale=None):
+        if not locale:
+            url = self.domain + '/api/v2/help_center/sections/{id}.json'.format(id=section_id)
+        else:
+            url = self.domain + '/api/v2/help_center/{locale}/sections/{id}.json'.format(locale=locale, id=section_id)
+
+        return self.put(url, data, self.email, self.password)
+
+    def update_section_source_locale(self, section_id, data):
+        url = self.domain + '/api/v2/help_center/sections/{id}/source_locale.json'.format(id=section_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_section(self, section_id):
+        url = self.domain + '/api/v2/help_center/sections/{id}.json'.format(id=section_id)
+        return self.delete(url, self.email, self.password)
 
 if __name__ == "__main__":
     domain = sys.argv[1]
