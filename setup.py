@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
         install_requires=['requests'],
         author = 'Caleb Boylan',
-        name = 'zendeskpy',
+        name = 'zendeskhc',
         description = 'Python module for interacting with the Zendesk Help Center API',
         author_email = 'calebboylan@gmail.com',
         url = 'https://github.com/squidboylan/zendeskpy',

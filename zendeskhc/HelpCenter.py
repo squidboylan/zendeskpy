@@ -2,7 +2,7 @@ from __future__ import print_function
 import requests
 import json
 import sys
-from ZendeskBase import Base
+from zendeskhc.ZendeskBase import Base
 
 class HelpCenter(Base):
     def __init__(self, domain, email=None, password=None):
@@ -133,6 +133,20 @@ class HelpCenter(Base):
     def list_enabled_and_default_locales(self):
         url = self.domain + '/api/v2/help_center/locales.json'
         return self.get(url, self.email, self.password)
+
+    # Section functions
+
+    def list_all_sections(self):
+        url = self.domain + '/api/v2/help_center/sections.json'
+        return self._page_gets(url, self.email, self.password)
+
+    def list_sections_by_locale(self, locale):
+        url = self.domain + '/api/v2/help_center/{locale}/sections.json'.format(locale=locale)
+        return self._page_gets(url, self.email, self.password)
+
+    def list_sections_by_category(self, category_id):
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(catergory_id=category_id)
+        return self._page_gets(url, self.email, self.password)
 
 if __name__ == "__main__":
     domain = sys.argv[1]
