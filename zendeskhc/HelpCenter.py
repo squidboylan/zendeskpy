@@ -270,6 +270,36 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/articles/{article_id}/labels/{id}.json'.format(article_id=article_id, id=label_id)
         return self.delete(url, self.email, self.password)
 
+    # Article Attachments
+
+    def list_article_attachments(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments.json'.format(article_id=article_id)
+        return self._page_gets(url, 'article_attachments')
+
+    def list_article_inline_attachments(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/inline.json'.format(article_id=article_id)
+        return self._page_gets(url, 'article_attachments')
+
+    def list_article_block_attachments(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/block.json'.format(article_id=article_id)
+        return self._page_gets(url, 'article_attachments')
+
+    def show_article_attachment(self, attachment_id):
+        url = self.domain + '/api/v2/help_center/articles/attachments/{id}.json'.format(id=attachment_id)
+        return self.get(url, self.email, self.password)
+
+    def create_article_attachment(self, article_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments.json'.format(article_id=article_id)
+        return self.post(url, data, self.email, self.password)
+
+    def create_unassociated_attachment(self, data):
+        url = self.domain + '/api/v2/help_center/articles/attachments.json'
+        return self.post(url, data, self.email, self.password)
+
+    def delete_article_attachment(self, attachment_id, data):
+        url = self.domain + '/api/v2/help_center/articles/attachments/{id}.json'.format(id=attachment_id)
+        return self.delete(url, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
