@@ -300,6 +300,58 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/articles/attachments/{id}.json'.format(id=attachment_id)
         return self.delete(url, self.email, self.password)
 
+    # Topic functions
+
+    def list_all_topics(self):
+        url = self.domain + '/api/v2/community/topics.json'
+        return self._page_gets(url, 'topics')
+
+    def show_topic(self, topic_id):
+        url = self.domain + '/api/v2/community/topics/{id}.json'.format(id=topic_id)
+        return self.get(url, self.email, self.password)
+
+    def create_topic(self, data):
+        url = self.domain + '/api/v2/community/topics.json'
+        return self.post(url, data, self.email, self.password)
+
+    def update_topic(self, topic_id, data):
+        url = self.domain + '/api/v2/community/topics/{id}.json'.format(id=topic_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_topic(self, topic_id):
+        url = self.domain + '/api/v2/community/topics/{id}.json'.format(id=topic_id)
+        return self.delete(url, self.email, self.password)
+
+    # Post functions
+
+    def list_all_posts(self):
+        url = self.domain + '/api/v2/community/posts.json'
+        return self._page_gets(url, 'posts')
+
+    def list_posts_by_topic(self, topic_id):
+        url = self.domain + '/api/v2/community/topics/{id}/posts.json'.format(id=topic_id)
+        return self._page_gets(url, 'posts')
+
+    def list_posts_by_user(self, user_id):
+        url = self.domain + '/api/v2/community/users/{id}/posts.json'.format(id=user_id)
+        return self._page_gets(url, 'posts')
+
+    def show_post(self, post_id):
+        url = self.domain + '/api/v2/community/posts/{id}.json'.format(id=post_id)
+        return self.get(url, self.email, self.password)
+
+    def create_post(self, data):
+        url = self.domain + '/api/v2/community/posts.json'
+        return self.post(url, data, self.email, self.password)
+
+    def update_post(self, post_id, data):
+        url = self.domain = '/api/v2/community/posts/{id}.json'.format(id=post_id)
+        return self.put(url, data, self.email, self.password)
+
+    def delete_post(self, post_id):
+        url = self.domain = '/api/v2/community/posts/{id}.json'.format(id=post_id)
+        return self.delete(url, data, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
