@@ -389,7 +389,7 @@ class HelpCenter(Base):
         return self.get(url, self.email, self.password)
 
     def create_article_subscription(self, article_id, data):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json'.(article_id=article_id)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json'.format(article_id=article_id)
         return self.post(url, data, self.email, self.password)
 
     def delete_article_subscription(self, article_id, subscription_id):
