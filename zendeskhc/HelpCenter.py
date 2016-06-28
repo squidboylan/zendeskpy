@@ -352,6 +352,32 @@ class HelpCenter(Base):
         url = self.domain = '/api/v2/community/posts/{id}.json'.format(id=post_id)
         return self.delete(url, data, self.email, self.password)
 
+    # Post comment functions
+
+    def list_post_comments(self, post_id):
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments.json'.format(post_id=post_id)
+        return self._page_gets(url, 'comments')
+
+    def list_post_comments_by_user(self, user_id):
+        url = self.domain + '/api/v2/community/users/{id}/comments.json'.format(id=user_id)
+        return self._page_gets(url, 'comments')
+
+    def show_post_comment(self, post_id, comment_id):
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments/{id}.json'.format(post_id=post_id, id=comment_id)
+        return self.get(url, self.email, self.password)
+
+    def create_post_comment(self, post_id, data):
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments.json'.format(post_id=post_id)
+        return self.post(url, data, self.email, self.password)
+
+    def update_post_comment(self, post_id, comment_id, data):
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments/{id}.json'.format(post_id=post_id, id=comment_id)
+        return self.put(url, data, self.email, self.password)
+
+    def update_post_comment(self, post_id, comment_id):
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments/{id}.json'.format(post_id=post_id, id=comment_id)
+        return self.post(url, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
