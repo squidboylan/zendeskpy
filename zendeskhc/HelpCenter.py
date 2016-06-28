@@ -374,9 +374,27 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/community/posts/{post_id}/comments/{id}.json'.format(post_id=post_id, id=comment_id)
         return self.put(url, data, self.email, self.password)
 
-    def update_post_comment(self, post_id, comment_id):
+    def delete_post_comment(self, post_id, comment_id):
         url = self.domain + '/api/v2/community/posts/{post_id}/comments/{id}.json'.format(post_id=post_id, id=comment_id)
-        return self.post(url, self.email, self.password)
+        return self.delete(url, self.email, self.password)
+
+    # Article Subscription functions
+
+    def list_article_subscriptions(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json'.format(article_id=article_id)
+        return self._page_gets(url, 'subscriptions')
+
+    def show_article_subscription(self, article_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json'.format(article_id=article_id, id=subscription_id)
+        return self.get(url, self.email, self.password)
+
+    def create_article_subscription(self, article_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json'.(article_id=article_id)
+        return self.post(url, data, self.email, self.password)
+
+    def delete_article_subscription(self, article_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json'.format(article_id=article_id, id=subscription_id)
+        return self.delete(url, self.email, self.password)
 
     # Article Search functions
 
