@@ -248,6 +248,36 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}.json'.format(article_id=article_id, id=comment_id)
         return self.delete(url, self.email, self.password)
 
+    # Labels Functions
+
+    def list_all_labels(self):
+        url = self.domain + '/api/v2/help_center/articles/labels.json'
+        return self._page_gets(url, 'labels')
+
+    def list_labels_by_article(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{id}/labels.json'.format(id=article_id)
+        return self._page_gets(url, 'labels')
+
+    def show_label(self, label_id):
+        url = self.domain + '/api/v2/help_center/articles/labels/{id}.json'.format(id=label_id)
+        return self.get(url, self.email, self.password)
+
+    def create_label(self, article_id, data):
+        url = self.domain + '/api/v2/help_center/articles/{id}/labels.json'.format(id=article_id)
+        return self.post(url, data, self.email, self.password)
+
+    def delete_label(self, article_id, label_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/labels/{id}.json'.format(article_id=article_id, id=label_id)
+        return self.delete(url, self.email, self.password)
+
+    # Article Search functions
+
+    def search_articles_by_labels(self, labels):
+        labels_string = ''
+        for i in labels:
+            labels_string = labels_string + i + ','
+        url = self.domain + '/api/v2/help_center/articles.json?label_names=' + labels_string
+        return self._page_gets(url, 'labels')
 
 if __name__ == "__main__":
     domain = sys.argv[1]
