@@ -494,6 +494,54 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/sections/{section_id}/subscriptions/{id}.json'.format(section_id=section_id, id=subscription_id)
         return self.delete(url, self.email, self.password)
 
+    # User Subscription functions
+
+    def list_user_subscriptions(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/users/{user_id}/subscriptions.json' + option_string
+        url = url.format(user_id=user_id)
+        return self._page_gets(url, 'subscriptions')
+
+    # Post Subscription functions
+
+    def list_post_subscriptions(self, post_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/subscriptions.json' + option_string
+        url = url.format(post_id=post_id)
+        return self._page_gets(url, 'subscriptions')
+
+    def show_post_subscription(self, post_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/subscriptions/{id}.json'.format(post_id=post_id, id=subscription_id)
+        return self.get(url, self.email, self.password)
+
+    def create_post_subscription(self, post_id, data):
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/subscriptions.json'.format(post_id=post_id)
+        return self.post(url, data, self.email, self.password)
+
+    def delete_post_subscription(self, post_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/subscriptions/{id}.json'.format(post_id=post_id, id=subscription_id)
+        return self.delete(url, self.email, self.password)
+
+    # Topic Subscription functions
+
+    def list_topic_subscriptions(self, topic_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions.json' + option_string
+        url = url.format(topic_id=topic_id)
+        return self._page_gets(url, 'subscriptions')
+
+    def show_topic_subscription(self, topic_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
+        return self.get(url, self.email, self.password)
+
+    def create_topic_subscription(self, topic_id, data):
+        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions.json'.format(topic_id=topic_id)
+        return self.post(url, data, self.email, self.password)
+
+    def delete_topic_subscription(self, topic_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
+        return self.delete(url, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
