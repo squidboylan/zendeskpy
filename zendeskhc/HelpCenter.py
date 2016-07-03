@@ -542,6 +542,78 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
         return self.delete(url, self.email, self.password)
 
+    # Vote functions
+
+    def list_user_votes(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/users/{user_id}/votes.json' + option_string
+        url = url.format(user_id=user_id)
+        return self._page_gets(url, 'votes')
+
+    def list_article_votes(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/votes.json' + option_string
+        url = url.format(article_id=article_id)
+        return self._page_gets(url, 'votes')
+
+    def list_article_comment_votes(self, article_id, comment_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{comment_id}/votes.json' + option_string
+        url = url.format(article_id=article_id, comment_id=comment_id)
+        return self._page_gets(url, 'votes')
+
+    def list_post_votes(self, post_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/votes.json' + option_string
+        url = url.format(post_id=post_id)
+        return self._page_gets(url, 'votes')
+
+    def list_post_comment_votes(self, post_id, comment_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/comments/{comment_id}/votes.json' + option_string
+        url = url.format(post_id=post_id, comment_id=comment_id)
+        return self._page_gets(url, 'votes')
+
+    def show_vote(self, vote_id):
+        url = self.domain + '/api/v2/help_center/votes/{id}.json'.format(id=vote_id)
+        return self.get(url, self.email, self.password)
+
+    def vote_article_up(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{id}/up.json'.format(id=article_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_article_down(self, article_id):
+        url = self.domain + '/api/v2/help_center/articles/{id}/down.json'.format(id=article_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_article_comment_up(self, article_id, comment_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}/up.json'.format(article_id=article_id, id=comment_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_article_comment_down(self, article_id, comment_id):
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/comments/{id}/down.json'.format(article_id=article_id, id=comment_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_post_up(self, post_id):
+        url = self.domain + '/api/v2/help_center/posts/{id}/up.json'.format(id=post_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_post_down(self, post_id):
+        url = self.domain + '/api/v2/help_center/posts/{id}/down.json'.format(id=post_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_post_comment_up(self, post_id, comment_id):
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/comments/{id}/up.json'.format(post_id=post_id, id=comment_id)
+        return self.post(url, self.email, self.password)
+
+    def vote_post_comment_down(self, post_id, comment_id):
+        url = self.domain + '/api/v2/help_center/posts/{post_id}/comments/{id}/down.json'.format(post_id=post_id, id=comment_id)
+        return self.post(url, self.email, self.password)
+
+    def delete_vote(self, vote_id):
+        url = self.domain + '/api/v2/help_center/votes/{id}.json'.format(id=vote_id)
+        return self.delete(url, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
