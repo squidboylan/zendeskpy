@@ -474,6 +474,26 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json'.format(article_id=article_id, id=subscription_id)
         return self.delete(url, self.email, self.password)
 
+    # Section Subscription functions
+
+    def list_section_subscriptions(self, section_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/subscriptions.json' + option_string
+        url = url.format(section_id=section_id)
+        return self._page_gets(url, 'subscriptions')
+
+    def show_section_subscription(self, section_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/subscriptions/{id}.json'.format(section_id=section_id, id=subscription_id)
+        return self.get(url, self.email, self.password)
+
+    def create_section_subscription(self, section_id, data):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/subscriptions.json'.format(section_id=section_id)
+        return self.post(url, data, self.email, self.password)
+
+    def delete_section_subscription(self, section_id, subscription_id):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/subscriptions/{id}.json'.format(section_id=section_id, id=subscription_id)
+        return self.delete(url, self.email, self.password)
+
     # Article Search functions
 
     def search_articles_by_labels(self, labels):
