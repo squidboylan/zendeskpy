@@ -422,7 +422,7 @@ class HelpCenter(Base):
 
     def delete_post(self, post_id):
         url = self.domain = '/api/v2/community/posts/{id}.json'.format(id=post_id)
-        return self.delete(url, data, self.email, self.password)
+        return self.delete(url, self.email, self.password)
 
     # Post comment functions
 
@@ -526,20 +526,20 @@ class HelpCenter(Base):
 
     def list_topic_subscriptions(self, topic_id, options=None):
         option_string = self._generate_options(options)
-        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions.json' + option_string
+        url = self.domain + '/api/v2/community/topics/{topic_id}/subscriptions.json' + option_string
         url = url.format(topic_id=topic_id)
         return self._page_gets(url, 'subscriptions')
 
     def show_topic_subscription(self, topic_id, subscription_id):
-        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
+        url = self.domain + '/api/v2/community/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
         return self.get(url, self.email, self.password)
 
     def create_topic_subscription(self, topic_id, data):
-        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions.json'.format(topic_id=topic_id)
+        url = self.domain + '/api/v2/community/topics/{topic_id}/subscriptions.json'.format(topic_id=topic_id)
         return self.post(url, data, self.email, self.password)
 
     def delete_topic_subscription(self, topic_id, subscription_id):
-        url = self.domain + '/api/v2/help_center/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
+        url = self.domain + '/api/v2/community/topics/{topic_id}/subscriptions/{id}.json'.format(topic_id=topic_id, id=subscription_id)
         return self.delete(url, self.email, self.password)
 
     # Vote functions
@@ -613,6 +613,24 @@ class HelpCenter(Base):
     def delete_vote(self, vote_id):
         url = self.domain + '/api/v2/help_center/votes/{id}.json'.format(id=vote_id)
         return self.delete(url, self.email, self.password)
+
+    # Access policy functions
+
+    def show_section_access_policy(self, section_id):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/access_policy.json'.format(section_id=section_id)
+        return self.get(url, self.email, self.password)
+
+    def show_topic_access_policy(self, topic_id):
+        url = self.domain + '/api/v2/community/topics/{topic_id}/access_policy.json'.format(topic_id=topic_id)
+        return self.get(url, self.email, self.password)
+
+    def update_section_access_policy(self, section_id, data):
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/access_policy.json'.format(section_id=section_id)
+        return self.put(url, data, self.email, self.password)
+
+    def update_topic_access_policy(self, topic_id, data):
+        url = self.domain + '/api/v2/community/topics/{topic_id}/access_policy.json'.format(topic_id=topic_id)
+        return self.put(url, data, self.email, self.password)
 
     # Article Search functions
 
