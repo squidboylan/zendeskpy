@@ -22,31 +22,59 @@ class HelpCenter(Base):
         data['next_page'] = None
         return data
 
+    def _generate_options(self, options=None):
+        option_string = '?'
+
+        if not options:
+            options = {}
+
+        if 'per_page' not in options.keys():
+            options['per_page'] = 100
+
+        for i in options.keys():
+            option_string = option_string + i
+            option_string = option_string + '='
+            option_string = option_string + str(options[i])
+            option_string = option_string + '&'
+
+        return option_string
+
     # Article functions
 
-    def list_all_articles(self):
-        url = self.domain + '/api/v2/help_center/articles.json?per_page=100'
+    def list_all_articles(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles.json' + option_string
         return self._page_gets(url, 'articles')
 
-    def list_articles_by_locale(self, locale):
-        url = self.domain + '/api/v2/help_center/{locale}/articles.json?per_page=100'.format(locale=locale)
+    def list_articles_by_locale(self, locale, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/{locale}/articles.json' + option_string
+        url = url.format(locale=locale)
         return self._page_gets(url, 'articles')
 
-    def list_articles_by_category(self, category_id):
-        url = self.domain + '/api/v2/help_center/categories/{id}/articles.json?per_page=100'.format(id=category_id)
+    def list_articles_by_category(self, category_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/categories/{id}/articles.json' + option_string
+        url = url.format(id=category_id)
         return self._page_gets(url, 'articles')
 
-    def list_articles_by_section(self, section_id):
-        url = self.domain + '/api/v2/help_center/sections/{id}/articles.json?per_page=100'.format(id=section_id)
+    def list_articles_by_section(self, section_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/sections/{id}/articles.json' + option_string
+        url = url.format(id=section_id)
         return self._page_gets(url, 'articles')
 
-    def list_articles_by_user(self, user_id):
-        url = self.domain + '/api/v2/help_center/users/{id}/articles.json?per_page=100'.format(id=user_id)
+    def list_articles_by_user(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/users/{id}/articles.json' + option_string
+        url = url.format(id=user_id)
         return self._page_gets(url, 'articles')
 
-    def list_changed_articles(self, start_time):
+    def list_changed_articles(self, start_time, options=None):
         # start_time should be a Unix epoch time
-        url = self.domain + '/api/v2/help_center/incremental/articles.json?start_time={start_time}?per_page=100'.format(start_time=start_time)
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/incremental/articles.json?start_time={start_time}' + option_string
+        url = url.format(start_time=start_time)
         return self._page_gets(url, 'articles')
 
     def show_article(self, article_id, locale=None):
@@ -75,28 +103,40 @@ class HelpCenter(Base):
 
     # Translation functions
 
-    def list_translations_by_article(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations.json'.format(article_id=article_id)
+    def list_translations_by_article(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations.json' + option_string
+        url = url.format(article_id=article_id)
         return self._page_gets(url, 'translations')
 
-    def list_translations_by_section(self, section_id):
-        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations.json'.format(section_id=section_id)
+    def list_translations_by_section(self, section_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations.json' + option_string
+        url = url.format(section_id=section_id)
         return self._page_gets(url, 'translations')
 
-    def list_translations_by_category(self, category_id):
-        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations.json'.format(category_id=category_id)
+    def list_translations_by_category(self, category_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations.json' + option_string
+        url = url.format(category_id=category_id)
         return self._page_gets(url, 'translations')
 
-    def list_missing_translations_by_article(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/missing.json'.format(article_id=article_id)
+    def list_missing_translations_by_article(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/missing.json' + option_string
+        url = url.format(article_id=article_id)
         return self.get(url, self.email, self.password)
 
-    def list_missing_translations_by_section(self, section_id):
-        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations/missing.json'.format(section_id=section_id)
+    def list_missing_translations_by_section(self, section_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/sections/{section_id}/translations/missing.json' + option_string
+        url = url.format(section_id=section_id)
         return self.get(url, self.email, self.password)
 
-    def list_missing_translations_by_category(self, category_id):
-        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations/missing.json'.format(category_id=category_id)
+    def list_missing_translations_by_category(self, category_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/translations/missing.json' + option_string
+        url = url.format(category_id=category_id)
         return self.get(url, self.email, self.password)
 
     def show_translation(self, article_id, locale):
@@ -137,16 +177,21 @@ class HelpCenter(Base):
 
     # Section functions
 
-    def list_all_sections(self):
-        url = self.domain + '/api/v2/help_center/sections.json'
+    def list_all_sections(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/sections.json' + option_string
         return self._page_gets(url, 'sections')
 
-    def list_sections_by_locale(self, locale):
-        url = self.domain + '/api/v2/help_center/{locale}/sections.json'.format(locale=locale)
+    def list_sections_by_locale(self, locale, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/{locale}/sections.json' + option_string
+        url = url.format(locale=locale)
         return self._page_gets(url, 'sections')
 
-    def list_sections_by_category(self, category_id):
-        url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json'.format(category_id=category_id)
+    def list_sections_by_category(self, category_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/categories/{category_id}/sections.json' + option_string
+        url = url.format(category_id=category_id)
         return self._page_gets(url, 'sections')
 
     def show_section(self, section_id, locale=None):
@@ -183,12 +228,15 @@ class HelpCenter(Base):
 
     # Category functions
 
-    def list_all_categories(self):
-        url = self.domain + '/api/v2/help_center/categories.json'
+    def list_all_categories(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/categories.json' + option_string
         return self._page_gets(url, 'categories')
 
-    def list_categories_by_locale(self, locale):
-        url = self.domain + '/api/v2/help_center/{locale}/categories.json'.format(locale=locale)
+    def list_categories_by_locale(self, locale, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/{locale}/categories.json' + option_string
+        url = url.format(locale=locale)
         return self._page_gets(url, 'categories')
 
     def show_category(self, category_id, locale=None):
@@ -225,12 +273,16 @@ class HelpCenter(Base):
 
     # Comment Functions
 
-    def list_comments_by_user(self, user_id):
-        url = self.domain + '/api/v2/help_center/users/{id}/comments.json'.format(id=user_id)
+    def list_comments_by_user(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/users/{id}/comments.json' + option_string
+        url = url.format(id=user_id)
         return self._page_gets(url, 'comments')
 
-    def list_comments_by_article(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{id}/comments.json'.format(id=article_id)
+    def list_comments_by_article(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{id}/comments.json' + option_string
+        url = url.format(id=article_id)
         return self._page_gets(url, 'comments')
 
     def show_comment(self, article_id, user_id):
@@ -251,12 +303,15 @@ class HelpCenter(Base):
 
     # Labels Functions
 
-    def list_all_labels(self):
-        url = self.domain + '/api/v2/help_center/articles/labels.json'
+    def list_all_labels(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/labels.json' + option_string
         return self._page_gets(url, 'labels')
 
-    def list_labels_by_article(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{id}/labels.json'.format(id=article_id)
+    def list_labels_by_article(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{id}/labels.json' + option_string
+        url = url.format(id=article_id)
         return self._page_gets(url, 'labels')
 
     def show_label(self, label_id):
@@ -273,16 +328,22 @@ class HelpCenter(Base):
 
     # Article Attachments
 
-    def list_article_attachments(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments.json'.format(article_id=article_id)
+    def list_article_attachments(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments.json' + option_string
+        url = url.format(article_id=article_id)
         return self._page_gets(url, 'article_attachments')
 
-    def list_article_inline_attachments(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/inline.json'.format(article_id=article_id)
+    def list_article_inline_attachments(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/inline.json' + option_string
+        url = url.format(article_id=article_id)
         return self._page_gets(url, 'article_attachments')
 
-    def list_article_block_attachments(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/block.json'.format(article_id=article_id)
+    def list_article_block_attachments(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/attachments/block.json' + option_string
+        url = url.format(article_id=article_id)
         return self._page_gets(url, 'article_attachments')
 
     def show_article_attachment(self, attachment_id):
@@ -303,8 +364,9 @@ class HelpCenter(Base):
 
     # Topic functions
 
-    def list_all_topics(self):
-        url = self.domain + '/api/v2/community/topics.json'
+    def list_all_topics(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/topics.json' + option_string
         return self._page_gets(url, 'topics')
 
     def show_topic(self, topic_id):
@@ -325,16 +387,21 @@ class HelpCenter(Base):
 
     # Post functions
 
-    def list_all_posts(self):
-        url = self.domain + '/api/v2/community/posts.json'
+    def list_all_posts(self, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/posts.json' + option_string
         return self._page_gets(url, 'posts')
 
-    def list_posts_by_topic(self, topic_id):
-        url = self.domain + '/api/v2/community/topics/{id}/posts.json'.format(id=topic_id)
+    def list_posts_by_topic(self, topic_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/topics/{id}/posts.json' + option_string
+        url = url.format(id=topic_id) 
         return self._page_gets(url, 'posts')
 
-    def list_posts_by_user(self, user_id):
-        url = self.domain + '/api/v2/community/users/{id}/posts.json'.format(id=user_id)
+    def list_posts_by_user(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/users/{id}/posts.json' + option_string
+        url = url.format(id=user_id)
         return self._page_gets(url, 'posts')
 
     def show_post(self, post_id):
@@ -355,12 +422,16 @@ class HelpCenter(Base):
 
     # Post comment functions
 
-    def list_post_comments(self, post_id):
-        url = self.domain + '/api/v2/community/posts/{post_id}/comments.json'.format(post_id=post_id)
+    def list_post_comments(self, post_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/posts/{post_id}/comments.json' + option_string
+        url = url.format(post_id=post_id)
         return self._page_gets(url, 'comments')
 
-    def list_post_comments_by_user(self, user_id):
-        url = self.domain + '/api/v2/community/users/{id}/comments.json'.format(id=user_id)
+    def list_post_comments_by_user(self, user_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/community/users/{id}/comments.json' + option_string
+        url = url.format(id=user_id)
         return self._page_gets(url, 'comments')
 
     def show_post_comment(self, post_id, comment_id):
@@ -381,8 +452,10 @@ class HelpCenter(Base):
 
     # Article Subscription functions
 
-    def list_article_subscriptions(self, article_id):
-        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json'.format(article_id=article_id)
+    def list_article_subscriptions(self, article_id, options=None):
+        option_string = self._generate_options(options)
+        url = self.domain + '/api/v2/help_center/articles/{article_id}/subscriptions.json' + option_string
+        url = url.format(article_id=article_id)
         return self._page_gets(url, 'subscriptions')
 
     def show_article_subscription(self, article_id, subscription_id):
