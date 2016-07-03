@@ -7,7 +7,7 @@ setuptools.setup(
         description = 'Python module for interacting with the Zendesk Help Center API',
         author_email = 'calebboylan@gmail.com',
         url = 'https://github.com/squidboylan/zendeskpy',
-        version = '0.4.0',
+        version = '0.4.1',
         classifiers = [
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
@@ -17,5 +17,5 @@ setuptools.setup(
             'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 2.7',
         ],
-        packages=setuptools.find_packages(),
+        packages=setuptools.find_packages(exclude=["tests"]),
 )

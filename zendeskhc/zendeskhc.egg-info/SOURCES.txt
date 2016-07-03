@@ -1,7 +1,0 @@
-README.rst
-setup.py
-zendeskhc/zendeskhc.egg-info/PKG-INFO
-zendeskhc/zendeskhc.egg-info/SOURCES.txt
-zendeskhc/zendeskhc.egg-info/dependency_links.txt
-zendeskhc/zendeskhc.egg-info/requires.txt
-zendeskhc/zendeskhc.egg-info/top_level.txt
