@@ -2,7 +2,7 @@ from __future__ import print_function
 import requests
 import json
 import sys
-from zendeskhc.ZendeskBase import Base
+from zendeskhc.ZendeskBase import *
 
 class HelpCenter(Base):
     def __init__(self, domain, email=None, password=None):
@@ -12,6 +12,10 @@ class HelpCenter(Base):
 
     def _page_gets(self, url, combine_key):
         data = self.get(url, self.email, self.password)
+
+        if 'error' in data.keys():
+            raise ZendeskError(data['error'])
+
         next_page_url = data['next_page']
 
         while next_page_url is not None:

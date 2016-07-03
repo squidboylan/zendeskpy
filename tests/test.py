@@ -9,7 +9,7 @@ except:
     sys.exit(1)
 
 hc = HelpCenter(domain)
-print(hc.list_all_articles())
+#print(hc.list_all_articles())
 sections = hc.list_all_sections()
 categories = hc.list_all_categories()
 print(hc.list_articles_by_locale('en-us'))
