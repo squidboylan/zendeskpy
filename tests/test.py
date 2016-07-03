@@ -10,5 +10,8 @@ except:
 
 hc = HelpCenter(domain)
 print(hc.list_all_articles())
-print(hc.list_all_sections())
-print(hc.list_all_categories())
+sections = hc.list_all_sections()
+categories = hc.list_all_categories()
+print(hc.list_articles_by_locale('en-us'))
+print(hc.list_articles_by_category(categories['categories'][0]['id']))
+print(hc.list_articles_by_section(sections['sections'][0]['id']))

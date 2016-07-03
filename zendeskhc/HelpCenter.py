@@ -44,7 +44,8 @@ class HelpCenter(Base):
         url = self.domain + '/api/v2/help_center/users/{id}/articles.json?per_page=100'.format(id=user_id)
         return self._page_gets(url, 'articles')
 
-    def list_articles_by_change(self, start_time):
+    def list_changed_articles(self, start_time):
+        # start_time should be a Unix epoch time
         url = self.domain + '/api/v2/help_center/incremental/articles.json?start_time={start_time}?per_page=100'.format(start_time=start_time)
         return self._page_gets(url, 'articles')
 
