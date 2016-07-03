@@ -103,37 +103,37 @@ class HelpCenter(Base):
 
     # Translation functions
 
-    def list_translations_by_article(self, article_id, options=None):
+    def list_article_translations(self, article_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/articles/{article_id}/translations.json' + option_string
         url = url.format(article_id=article_id)
         return self._page_gets(url, 'translations')
 
-    def list_translations_by_section(self, section_id, options=None):
+    def list_section_translations(self, section_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/sections/{section_id}/translations.json' + option_string
         url = url.format(section_id=section_id)
         return self._page_gets(url, 'translations')
 
-    def list_translations_by_category(self, category_id, options=None):
+    def list_category_translations(self, category_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/categories/{category_id}/translations.json' + option_string
         url = url.format(category_id=category_id)
         return self._page_gets(url, 'translations')
 
-    def list_missing_translations_by_article(self, article_id, options=None):
+    def list_missing_article_translations(self, article_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/articles/{article_id}/translations/missing.json' + option_string
         url = url.format(article_id=article_id)
         return self.get(url, self.email, self.password)
 
-    def list_missing_translations_by_section(self, section_id, options=None):
+    def list_missing_section_translations(self, section_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/sections/{section_id}/translations/missing.json' + option_string
         url = url.format(section_id=section_id)
         return self.get(url, self.email, self.password)
 
-    def list_missing_translations_by_category(self, category_id, options=None):
+    def list_missing_category_translations(self, category_id, options=None):
         option_string = self._generate_options(options)
         url = self.domain + '/api/v2/help_center/categories/{category_id}/translations/missing.json' + option_string
         url = url.format(category_id=category_id)
